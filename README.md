@@ -64,9 +64,7 @@ Additive time series is a combination(addition) of trend, seasonality, and Irreg
 ### 7) **`Rolling Statistics and Stationarity in Time-series`**
 A stationary time series is a data that has a constant mean and constant variance. If I take a mean of T1 and T2 and compare it with the mean of T4 and T5 then is it the same, and if different, how much difference is there? So, constant mean means this difference should be less, and the same with variance.
 
-If the time series is not stationary, we have to make it stationary and then proceed with modelling. Rolling statistics is help us in making time series stationary. so basically rolling statistics calculates moving average. To calculate the moving average we need to define the window size which is basically how much past values to be considered.
-
-#### Data Types of Time Series
+### 8) **`Data Types of Time Series`**
 Let’s discuss the time series’ data types and their influence. While discussing TS data-types, there are two major types.
 + **`Stationary`**
 + **`Non- Stationary`**
@@ -78,6 +76,34 @@ The COVARIANCE measures the relationship between two variables.**
 + **Non- Stationary: This is just the opposite of Stationary.**
 ![image](https://user-images.githubusercontent.com/99672298/183439986-f42b4b82-2ba8-4d01-b2cc-1d6b0945ccbf.png)
 
+#### Methods to check Stationarity 
+During the TSA model preparation workflow, we must access if the given dataset is Stationary or NOT. Using Statistical and Plots test.
++ **`Statistical Test: There are two tests available to test if the dataset is Stationary or NOT.`**
++ **Augmented Dickey-Fuller (ADF) Test**
++ **Kwiatkowski-Phillips-Schmidt-Shin (KPSS) Test**
++ **Augmented Dickey-Fuller (ADF) Test or Unit Root Test:** The ADF test is the most popular statistical test and with the following assumptions.
++ + Null Hypothesis (H0): Series is non-stationary
++ + Alternate Hypothesis (HA): Series is stationary
++ + p-value >0.05 Fail to reject (H0)
++ + p-value <= 0.05 Accept (H1)
++ **Kwiatkowski–Phillips–Schmidt–Shin (KPSS):** these tests are used for testing a NULL Hypothesis (HO), that will perceive the time-series, as stationary around a deterministic trend against the alternative of a unit root. Since TSA looking for Stationary Data for its further analysis, we have to make sure that the dataset should be stationary.
+
+#### Converting Non- stationary into stationary
+Let’s discuss quickly how to convert Non- stationary into stationary for effective time series modeling. There are two major methods available for this conversion.
++ **`Detrending`**
++ **`Differencing`**
++ **`Transformation`**
+
+##### Detrending: It involves removing the trend effects from the given dataset and showing only the differences in values from the trend. it always allows the cyclical patterns to be identified.
+
+##### Differencing: This is a simple transformation of the series into a new time series, which we use to remove the series dependence on time and stabilize the mean of the time series, so trend and seasonality are reduced during this transformation.
+Yt= Yt – Yt-1
+Yt=Value with time
+
+##### Transformation: This includes three different methods they are Power Transform, Square Root, and Log Transfer., most commonly used one is Log Transfer.
+
+If the time series is not stationary, we have to make it stationary and then proceed with modelling. Rolling statistics is help us in making time series stationary. so basically rolling statistics calculates moving average. To calculate the moving average we need to define the window size which is basically how much past values to be considered.
+
 For example, if we take the window as 2 then to calculate a moving average in the above example then, at point T1 it will be blank, at point T2 it will be the mean of T1 and T2, at point T3 mean of T3 and T2, and so on. And after calculating all moving averages if you plot the line above actual values and calculated moving averages then you can see that the plot will be smooth.
 
 ![image](https://user-images.githubusercontent.com/99672298/183432317-07e7ba4c-512d-45e7-8465-5ad5b57b82ea.png)
@@ -85,7 +111,40 @@ For example, if we take the window as 2 then to calculate a moving average in th
 
 This is one method of making time series stationary, there are other methods also which we are going to study as Exponential smoothing
 
-### 8) **`Time series Exponential Smoothing`**
+### 10) Moving Average Methodology
+The commonly used time series method is Moving Average. This method is slick with random short-term variations. Relatively associated with the components of time series.
+
+The Moving Average (MA) (Or) Rolling Mean: In which MA has calculated by taking averaging data of the time-series, within k periods.
+
+Let’s see the types of moving averages:
++ Simple Moving Average (SMA),
++ Cumulative Moving Average (CMA)
++ Exponential Moving Average (EMA)
+#### **Simple Moving Average (SMA)**
+The SMA is the unweighted mean of the previous M or N points. The selection of sliding window data points, depending on the amount of smoothing is preferred since increasing the value of M or N, improves the smoothing at the expense of accuracy\
+
+![image](https://user-images.githubusercontent.com/99672298/183445596-c9d47c25-1248-440a-9816-62175d094d4d.png)
+
+![image](https://user-images.githubusercontent.com/99672298/183445684-cfa2e9f5-af74-40b9-a355-0643451c757c.png)
+
+#### **Cumulative Moving Average (CMA)**
+The CMA is the unweighted mean of past values, till the current time.
+
+![image](https://user-images.githubusercontent.com/99672298/183445809-8bc42ac4-a71e-4d6e-adfc-a6710522617b.png)
+![image](https://user-images.githubusercontent.com/99672298/183445834-20a857fd-4330-4c50-b3cf-5b6cacff6c3e.png)
+
+#### **Exponential Moving Average (EMA)**
+
+EMA is mainly used to identify trends and to filter out noise. The weight of elements is decreased gradually over time. This means It gives weight to recent data points, not historical ones. Compared with SMA, the EMA is faster to change and more sensitive.
+α –>Smoothing Factor.
+
+Represents the weighting applied to the very recent period.
+Lets will apply the exponential moving averages with a smoothing factor of 0.1 and 0.3 in the given dataset.
+
+![image](https://user-images.githubusercontent.com/99672298/183445981-dfd0a717-18b3-430f-8ce9-7e463430b77a.png)
+![image](https://user-images.githubusercontent.com/99672298/183446018-531f6fe3-4321-480b-b06e-942db973065a.png)
+
+### 10) **`Time series Exponential Smoothing`**
 Exponential smoothing calculates the moving average by considering more past values and give them weightage as per their occurrence, as recent observation gets more weightage compared to past observation so that the prediction is accurate. hence the formula of exponential smoothing can be defined as.
 
          yT = α * XT + α(1−α) * yT−1
@@ -105,6 +164,26 @@ If we need to capture trend and seasonality for both components then it is known
        where, ct = gamma * (xt/yt) + (1-alpha) * ct-alpha
 
 here we are capturing trends as well as seasonality. Using smoothing we will be able to decompose our time series data and our time-series data will become easy to work with because in real-world scenarios working with time series is a complex task so you have to adopt such methods to make the process smooth.
+
+### 11) **`Time Series Analysis in Data Science and Machine Learning`**
+When dealing with TSA in Data Science and Machine Learning, there are multiple model options are available. In which the Autoregressive–Moving-Average (ARMA) models with [p, d, and q].
++ P==> autoregressive lags
++ q== moving average lags
++ d==> difference in the order
+Before we get to know about Arima, first you should understand the below terms better.
+
++ **Auto-Correlation Function (ACF)**
++ **Partial Auto-Correlation Function (PACF)**
+
+**Auto-Correlation Function (ACF):** ACF is used to indicate and how similar a value is within a given time series and the previous value. (OR) It measures the degree of the similarity between a given time series and the lagged version of that time series at different intervals that we observed. This is used to identify a set of trends in the given dataset and the influence of former observed values on the currently observed values.
+**Partial Auto-Correlation (PACF):** PACF is similar to Auto-Correlation Function and is a little challenging to understand. It always shows the correlation of the sequence with itself with some number of time units per sequence order in which only the direct effect has been shown, and all other intermediary effects are removed from the given time series.
+
+Autocorrelation analysis is an important step in the Exploratory Data Analysis of time series forecasting. The autocorrelation analysis helps detect patterns and check for randomness. It’s especially important when you intend to use an autoregressive–moving-average (ARMA) model for forecasting because it helps to determine its parameters. The analysis involves looking at the Autocorrelation Function (ACF) and Partial Autocorrelation Function (PACF) plots.
+
+##### What is correlation?
+In statistics, correlation or dependence refers to any statistical association between two random variables or bivariate data, whether causal or not. Correlation refers to any statistical association in the broadest sense, but it actually relates to the degree to which two variables are linearly connected. 
+
+
 
 #### What are the limitations of Time Series Analysis?
 Time series has the below-mentioned limitations, we have to take care of those during our analysis,
