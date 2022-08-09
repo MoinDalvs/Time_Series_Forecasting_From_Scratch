@@ -619,6 +619,30 @@ Answer:
 + **Estimation of trends:** The time series analysis helps in the identification of trends. The data tendencies are useful to managers as they show an increase or decrease in sales, production, share prices, etc.
 + **Growth:** Time series analysis helps in the measurement of financial growth. It also helps in measuring the internal growth of an organization that leads to economic growth.
 
+## Resampling
+Resampling involves changing the frequency of your time series observations.
+
+Two types of resampling are:
+
++ Upsampling: Where you increase the frequency of the samples, such as from minutes to seconds.
++ Downsampling: Where you decrease the frequency of the samples, such as from days to months.
+In both cases, data must be invented.
+
+In the case of upsampling, care may be needed in determining how the fine-grained observations are calculated using interpolation. In the case of downsampling, care may be needed in selecting the summary statistics used to calculate the new aggregated values.
+
+There are perhaps two main reasons why you may be interested in resampling your time series data:
+
++ Problem Framing: Resampling may be required if your data is not available at the same frequency that you want to make predictions.
++ Feature Engineering: Resampling can also be used to provide additional structure or insight into the learning problem for supervised learning models.
+
+There is a lot of overlap between these two cases.
+
+For example, you may have daily data and want to predict a monthly problem. You could use the daily data directly or you could downsample it to monthly data and develop your model.
+
+A feature engineering perspective may use observations and summaries of observations from both time scales and more in developing a model.
+
+
+
 <div style="display:fill;
             border-radius: false;
             border-style: solid;
