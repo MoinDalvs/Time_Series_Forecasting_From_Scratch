@@ -10,6 +10,15 @@ Timeseries forecasting in simple words means to forecast or to predict the futur
 
 A different person can have a different perspective like one can say find the mean of all observations, one can have like take mean of recent two observations, one can say like give more weightage to current observation and less to past, or one can say use interpolation. There are different methods to forecast the values.
 
+## Time Series – Analysis Vs. Forecasting
+Time-series analysis is the scientific extraction of useful information from time-series data to gather insights from it. It consists of a series of data that varies with time. It is non-static in nature. Likewise, it may vary from hours to minutes and even seconds (milliseconds to microseconds). Due to its continuous and non-static nature, working with time-series data is challenging!
+
+As time-series data consists of a series of observations taken in sequences of time, it is entirely non-static in nature.
+
+Thus, it’s a descriptive Vs. predictive strategy based on your time-series problem statement.
+
+In a nutshell, time series analysis is the study of patterns and trends in a time-series data frame by descriptive and inferential statistical methods. Whereas, time series forecasting involves forecasting and extrapolating future trends or values based on old data points (supervised time-series forecasting), clustering them into groups, and predicting future patterns (unsupervised time-series forecasting).
+
 #### How to analyze Time Series?
 + Collecting the data and cleaning it
 + Preparing Visualization with respect to time vs key feature
@@ -231,12 +240,26 @@ From the above PACF plot if you observe the values at regular intervals, at the 
 
 #### **`The ACF and PACF are used to figure out the order of AR, MA, and ARMA models.`**
 
+#### Interpret ACF and PACF plots
+
+![image](https://user-images.githubusercontent.com/99672298/183576590-f662c1da-9b60-4cbb-ae7e-1cc1008f0510.png)
+
 ### Auto-Regressive and Moving Average Models
 Auto-Regressive Model
 
-The Auto-Regressive (AR) model assumes that the current value (y_t) is dependent on previous values (y_(t-1), y_(t-2), …). Because of this assumption, we can build a linear regression model.
+The Auto-Regressive (AR) model assumes that the current value (y_t) is dependent on previous values (y_(t-1), y_(t-2), …). Because of this assumption, we can build a linear regression model. This is a simple model, that predicts future performance based on past performance. mainly used for forecasting, when there is some correlation between values in a given time series and the values that precede and succeed (back and forth).
+An AR model is a Linear Regression model, that uses lagged variables as input
 
 ![image](https://user-images.githubusercontent.com/99672298/183572275-e42c2d33-e8e1-492c-85f2-bc2db72757bc.png)
+
+Yt =C+b1 Yt-1+ b2 Yt-2+……+ bp Yt-p+ Ert
+
+Key Parameters
+
+p=past values
+Yt=Function of different past values
+Ert=errors in time
+C=intercept
 
 To figure out the order of an AR model, you need to look at the PACF.
 
@@ -250,6 +273,46 @@ To figure out the order of an MA model, you need to look at the ACF.
 
 Precondition: Stationarity
 ACF and PACF assume stationarity of the underlying time series.
+
+### ARMA 
+This is a combination of the Auto-Regressive and Moving Average model for forecasting. This model provides a weakly stationary stochastic process in terms of two polynomials, one for the Auto-Regressive and the second for the Moving Average
+
+ARMA is the combination of an Auto-regressive Model and Moving Average Model.
+
+The auto-regressive model is when a time series value is regressed on previous values from the same time series. The underlying mathematical idea is:
+
+Today’s Value = Mean + Slope×Yesterday’s Value+ Noise
+
+The moving average model is a regression on the weighted sum of today’s and yesterday’s noise. The underlying mathematical idea is:
+
+Today’s Value = Mean + Slope×Yesterday’s Noise + Noise
+
+With the mathematical idea of the combined ARMA model being:
+
+Today’s Value= Mean + Noise + AR_Slope×Yesterday’s Value + MA_Slope×Yesterday’s Noise + Noise
+
+Higher order ARMA models look further back than just yesterday, and the order can be different for the AR model and the MA model within the same ARMA.
+
+ARMA requires stationary data, so any trends need to be removed before modeling and then reintroduced to adjust the result (i.e. inverse transform the result by any transforms that were used to remove the trend), and cannot handle seasonality.
+
+**`ARMA is best for predicting stationary series. So ARIMA came in since it supports stationary as well as non-stationary.`**
+
++ AR ==> Uses the past values to predict the future
++ MA ==> Uses the past error terms in the given series to predict the future
++ I==> uses the differencing of observation and makes the data stationary 
++ AR+I+MA= ARIMA
+
+Understand the Signature of ARIMA
++ p==> log order => No of lag observations.
++ d==> degree of differencing => No of times that the raw observations are differenced.
+In an ARIMA model we transform a time series into stationary one(series without trend or seasonality) using differencing
++ q==>order of moving average => the size of the moving average window
+
+![image](https://user-images.githubusercontent.com/99672298/183579676-93dd366e-a796-48e4-8d91-fc836d8bb583.png)
+
+**`SARIMAX`** builds on ARMA, and it can handle Seasonality, Integrates differencing into the model to remove trends, and allows for eXogenous regressors (i.e. predictive features other than the target variable being predicted; there is an important caveat that you must have the exogenous regressor for the period that will be predicted).
+
+**`FBProphet`** is a time series forecasting library released by Facebook. It is easier to implement and tune with more approachable and intuitive parameters and customizations. The API is also more similar to scikit-learn that the StatsModels models discussed previously. It is based on an additive regression model, which is built up from multiple regression models for various time series decomposed from the original one. Its core formulation has 4 separate components to address the time series’ overall trend, weekly seasonality, annual seasonality and holiday behavior (i.e. atypical days).
 
 #### What are the limitations of Time Series Analysis?
 Time series has the below-mentioned limitations, we have to take care of those during our analysis,
