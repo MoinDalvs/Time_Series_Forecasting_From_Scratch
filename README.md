@@ -606,7 +606,7 @@ Models mostly work on Uni-variate data.
 + Since TSA involves producing the set of information in a particular sequence, it makes a distinct from spatial and other analyses.
 + Using AR, MA, ARMA, and ARIMA models, we could predict the future.
 
-![11 07 2022_23 20 55_REC](https://user-images.githubusercontent.com/99672298/183698626-4d084cb5-f8ef-4ebe-8833-a891297651f6.png)
+![image](https://user-images.githubusercontent.com/99672298/183704027-c2f3a8e3-a6c6-4363-8427-8c9db99478d6.png)
 
 ### What are the advantages of using Time series analysis?
 
