@@ -226,6 +226,101 @@ If we need to capture trend and seasonality for both components then it is known
 
 here we are capturing trends as well as seasonality. Using smoothing we will be able to decompose our time series data and our time-series data will become easy to work with because in real-world scenarios working with time series is a complex task so you have to adopt such methods to make the process smooth.
 
+#### Types of Exponential Smoothing
+There are three main types of exponential smoothing time series forecasting methods.
+
+A simple method that assumes no systematic structure, an extension that explicitly handles trends, and the most advanced approach that add support for seasonality.
+
+#### Simple Exponential Smoothing
+Single Exponential Smoothing, SES for short, also called Simple Exponential Smoothing, is a time series forecasting method for univariate data without a trend or seasonality.
+
+It requires a single parameter, called alpha (a), also called the smoothing factor or smoothing coefficient.
+
+This parameter controls the rate at which the influence of the observations at prior time steps decay exponentially. Alpha is often set to a value between 0 and 1. Large values mean that the model pays attention mainly to the most recent past observations, whereas smaller values mean more of the history is taken into account when making a prediction
+
+A value close to 1 indicates fast learning (that is, only the most recent values influence the forecasts), whereas a value close to 0 indicates slow learning (past observations have a large influence on forecasts).
+
+st = αxt+(1 – α)st-1 = st-1 + α(xt – st-1)
+
+Hyperparameters:
+
++ Alpha: Smoothing factor for the level.
+
+#### Double Exponential Smoothing
+Double Exponential Smoothing is an extension to Exponential Smoothing that explicitly adds support for trends in the univariate time series.
+
+In addition to the alpha parameter for controlling smoothing factor for the level, an additional smoothing factor is added to control the decay of the influence of the change in trend called beta (b).
+
+The method supports trends that change in different ways: an additive and a multiplicative, depending on whether the trend is linear or exponential respectively.
+
+Double Exponential Smoothing with an additive trend is classically referred to as Holt’s linear trend model, named for the developer of the method Charles Holt.
+
+Additive Trend: Double Exponential Smoothing with a linear trend.
+Multiplicative Trend: Double Exponential Smoothing with an exponential trend.
+For longer range (multi-step) forecasts, the trend may continue on unrealistically. As such, it can be useful to dampen the trend over time.
+
+Dampening means reducing the size of the trend over future time steps down to a straight line (no trend).
+
+S1 = x1
+
+B1 = x1-x0
+
+For t>1,
+
+st = αxt + (1 – α)(st-1 + bt-1)
+
+βt = β(st – st-1) + (1 – β)bt-1
+
+Here,
+
+st = smoothed statistic, it is the simple weighted average of current observation xt
+
+st-1 = previous smoothed statistic
+
+α = smoothing factor of data; 0 < α < 1
+
+t = time period
+
+bt = best estimate of trend at time t
+
+β = trend smoothing factor; 0 < β <1
+
++ Additive Dampening: Dampen a trend linearly.
++ Multiplicative Dampening: Dampen the trend exponentially.
+
+##### Hyperparameters:
+
++ Alpha: Smoothing factor for the level.
++ Beta: Smoothing factor for the trend.
++ Trend Type: Additive or multiplicative.
++ Dampen Type: Additive or multiplicative.
++ Phi: Damping coefficient.
+
+#### Triple Exponential Smoothing
+
+Triple Exponential Smoothing is an extension of Exponential Smoothing that explicitly adds support for seasonality to the univariate time series.
+
+This method is sometimes called Holt-Winters Exponential Smoothing, named for two contributors to the method: Charles Holt and Peter Winters.
+
+In addition to the alpha and beta smoothing factors, a new parameter is added called gamma (g) that controls the influence on the seasonal component.
+
+As with the trend, the seasonality may be modeled as either an additive or multiplicative process for a linear or exponential change in the seasonality.
+
+Additive Seasonality: Triple Exponential Smoothing with a linear seasonality.
+Multiplicative Seasonality: Triple Exponential Smoothing with an exponential seasonality.
+Triple exponential smoothing is the most advanced variation of exponential smoothing and through configuration, it can also develop double and single exponential smoothing models.
+
+##### Hyperparameters:
+
++ Alpha: Smoothing factor for the level.
++ Beta: Smoothing factor for the trend.
++ Gamma: Smoothing factor for the seasonality.
++ Trend Type: Additive or multiplicative.
++ Dampen Type: Additive or multiplicative.
++ Phi: Damping coefficient.
++ Seasonality Type: Additive or multiplicative.
++ Period: Time steps in seasonal period.
+
 ### 11) **`Time Series Analysis in Data Science and Machine Learning`**
 When dealing with TSA in Data Science and Machine Learning, there are multiple model options are available. In which the Autoregressive–Moving-Average (ARMA) models with [p, d, and q].
 + P==> autoregressive lags
