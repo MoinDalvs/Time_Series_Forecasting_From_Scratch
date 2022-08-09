@@ -39,49 +39,87 @@ In a nutshell, time series analysis is the study of patterns and trends in a tim
 + Descriptive analysis
 + Intervention analysis
 
+#### The Time Series Integrants
+Any time-series problem or data can be broken down or decomposed into several integrants, which can be useful for performing analysis and forecasting. Transforming time series into a series of integrants is called Time Series Decomposition.
+
+A quick thing worth mentioning is that the integrants are broken further into 2 types-
+
+1. Systematic — components that can be used for predictive modelling and occur recurrently. Level, Trend, and Seasonality come under this category.
+2. Non-systematic — components that cannot be used for predictive modelling directly. Noise comes under this category.
+
 while Forecasting time series values, there are some important terms need to be taken care of and the main task of time series forecasting is to forecast these  terms.
 
 ![11 07 2022_15 44 34_REC](https://user-images.githubusercontent.com/99672298/183430156-3aaf9246-b8da-4d7b-be03-1eac766d12c8.png)
 
-### 1) **`Seasonality`**
+### 1.) Level — The most common integrant in every time series data is the level. It is nothing but the mean or average value in the time series. It has 0 variances when plotted against itself.
+
+### 2) **`Seasonality`**
 
 Seasonality is a simple term that means while predicting a time series data there are some months in a particular domain where the output value is at a peak as compared to other months. for example if you observe the data of tours and travels companies of past 3 years then you can see that in November and December the distribution will be very high due to holiday season and festival season. So while forecasting time series data we need to capture this seasonality.
 
 Seasonal variations refer to the changes that take place due to the rhythmic forces which operate in a regular and periodic manner. These forces usually have the same or most similar pattern year after year. When we record data weekly, monthly or quarterly, we can see and calculate seasonal variations. Thus, when a time series consists of data only based on annual figures, there will be seen no seasonal variations. These variations may be due to seasons, weather conditions, habits, customs or traditions. For example, in summers the sale of ice-cream increases and at the time of Diwali the sale of diyas, crackers, etc. go up.
 
-### 2) **`Trend`**
+Note — If seasonality doesn’t occur at the same frequency, we call it a cycle. A cycle does not have any predefined and fixed signal or frequency is very uncertain, in terms of probability. It may sometimes be random, which poses a great challenge in forecasting.
+
+### 3) **`Trend`**
 
 The trend is also one of the important factors which describe that there is certainly increasing or decreasing trend time series, which actually means the value of organization or sales over a period of time and seasonality is increasing or decreasing.
  
  Secular trend refers to the general tendency of data to increase or decrease or stagnate over a long period of time. Time series relating to Economic, Business, and Commerce may show an upward or increasing tendency. Whereas, the time series relating to death rates, birth rates, share prices, etc. may show a downward or decreasing tendency
  
-### 3) **`Unexpected Events`**
+### 4) **`Unexpected Events`**
 
 Unexpected events mean some dynamic changes occur in an organization, or in the market which cannot be captured. for example a current pandemic we are suffering from, and if you observe the Sensex or nifty chart there is a huge decrease in stock price which is an unexpected event that occurs in the surrounding.
 
 Methods and algorithms are using which we can capture seasonality and trend But the unexpected event occurs dynamically so capturing this becomes very difficult.
 
-### 4) **`Cyclical:`** In which there is no fixed interval, uncertainty in movement and its pattern
+### 5) **`Cyclical:`** In which there is no fixed interval, uncertainty in movement and its pattern
 
+ A particular time-series pattern that repeats itself after a large gap or interval of time, like months, years, or even decades.
+ 
 Cyclical variations are due to the ups and downs recurring after a period from time to time. These are due to the business cycle and every organization has to phase all the four phases of a business cycle some time or the other. Prosperity or boom, recession, depression, and recovery are the four phases of a business cycle.
 
-### 5) **`Irregularity:`** Unexpected situations/events/scenarios and spikes in a short time span.
+### 6) **`Irregularity:`** Unexpected situations/events/scenarios and spikes in a short time span.
 
 Random variations are fluctuations which are a result of unforeseen and unpredictable forces. These forces operate in an absolutely random or erratic manner and do not have any definite pattern. Thus, these variations may be due to floods, famines, earthquakes, strikes, wars etc.
 
 ![image](https://user-images.githubusercontent.com/99672298/183436930-c6338af7-f442-4d3a-a2d5-74f214e03bca.png)
 
-### 6) **`Additive and Multiplicative Time series`**
+### 7) Noise — A irregularity or noise is a randomly occurring integrant, and it’s optional and arrives under observation if and only if the features are not correlated with each other and, most importantly, variance is the similar across the series. Noise can lead to dirty and messy data and hinder forecasting, hence noise removal or at least reduction is a very important part of the time series data pre-processing stage.
+
+### 8) **`Additive and Multiplicative Time series`**
 In the real world, we meet with different kinds of time series data. For this, we must know the concepts of Exponential smoothing and for this first, we need to study types of time series data as additive and multiplicative. As we studied there are 3 components we need to capture as Trend(T), seasonality(S), and Irregularity(I).
+
+The Additive Methodology —
+
+When the time series trend is a linear relationship between integrants, i.e., the frequency (width) and amplitude(height) of the series are the same, the additive rule is applied.
+
+Additive methodology is used when we have a time series where seasonal variation is linear or constant over timestamps.
+
+It can be represented as follows-
+
+y(t) or x(t) = level + trend + seasonality + noise
+
+where the model y(multivariate) or x(univariate) is a function of time t.
+
+The Multiplicative Methodology — 
+
+When the time series is not a linear relationship between integrants, then modelling is done following the multiplicative rule.
+
+The multiplicative methodology is used when we have a time series where seasonal variation increases with time — which may be exponential or quadratic.
+
+It is represented as-
+
+y(t) or x(t)= Level * Trend * Seasonality * Noise
 
 Additive time series is a combination(addition) of trend, seasonality, and Irregularity while multiplicative time series is the multiplication of these three terms.
 
 ![image](https://user-images.githubusercontent.com/99672298/183433289-da9ff34e-8ace-45b1-85f9-8ab29d95a69f.png)
 
-### 7) **`Rolling Statistics and Stationarity in Time-series`**
+### 9) **`Rolling Statistics and Stationarity in Time-series`**
 A stationary time series is a data that has a constant mean and constant variance. If I take a mean of T1 and T2 and compare it with the mean of T4 and T5 then is it the same, and if different, how much difference is there? So, constant mean means this difference should be less, and the same with variance.
 
-### 8) **`Data Types of Time Series`**
+### 10) **`Data Types of Time Series`**
 Let’s discuss the time series’ data types and their influence. While discussing TS data-types, there are two major types.
 + **`Stationary`**
 + **`Non- Stationary`**
@@ -128,7 +166,7 @@ For example, if we take the window as 2 then to calculate a moving average in th
 
 This is one method of making time series stationary, there are other methods also which we are going to study as Exponential smoothing
 
-### 10) Moving Average Methodology
+### Moving Average Methodology
 The commonly used time series method is Moving Average. This method is slick with random short-term variations. Relatively associated with the components of time series.
 
 The Moving Average (MA) (Or) Rolling Mean: In which MA has calculated by taking averaging data of the time-series, within k periods.
@@ -269,6 +307,7 @@ The Moving Average (MA) model assumes that the current value (y_t) is dependent 
 
 ![image](https://user-images.githubusercontent.com/99672298/183572308-bb7b93ac-2d58-4798-aeb1-1e9159abf791.png)
 
+The moving average model is a time series model that accounts for very short-run autocorrelation. It basically states that the next observation is the mean of every past observation. The order of the moving average model, q, can usually be estimated by looking at the ACF plot of the time series.
 To figure out the order of an MA model, you need to look at the ACF.
 
 Precondition: Stationarity
@@ -311,6 +350,18 @@ In an ARIMA model we transform a time series into stationary one(series without 
 ![image](https://user-images.githubusercontent.com/99672298/183579676-93dd366e-a796-48e4-8d91-fc836d8bb583.png)
 
 **`SARIMAX`** builds on ARMA, and it can handle Seasonality, Integrates differencing into the model to remove trends, and allows for eXogenous regressors (i.e. predictive features other than the target variable being predicted; there is an important caveat that you must have the exogenous regressor for the period that will be predicted).
+
+Designed and developed as a beautiful extension to the ARIMA, SARIMAX or, Seasonal Auto-Regressive Integrated Moving Average with eXogenous factors is a better player than ARIMA in case of highly seasonal time series. There are 4 seasonal components that SARIMAX takes into account.
+
+They are -
+
+ 1. Seasonal Autoregressive Component
+
+ 2. Seasonal Moving Average Component
+
+ 3. Seasonal Integrity Order Component
+
+ 4. Seasonal Periodicity
 
 **`FBProphet`** is a time series forecasting library released by Facebook. It is easier to implement and tune with more approachable and intuitive parameters and customizations. The API is also more similar to scikit-learn that the StatsModels models discussed previously. It is based on an additive regression model, which is built up from multiple regression models for various time series decomposed from the original one. Its core formulation has 4 separate components to address the time series’ overall trend, weekly seasonality, annual seasonality and holiday behavior (i.e. atypical days).
 
