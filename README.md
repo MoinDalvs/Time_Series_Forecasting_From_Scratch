@@ -38,10 +38,14 @@ while Forecasting time series values, there are some important terms need to be 
 
 Seasonality is a simple term that means while predicting a time series data there are some months in a particular domain where the output value is at a peak as compared to other months. for example if you observe the data of tours and travels companies of past 3 years then you can see that in November and December the distribution will be very high due to holiday season and festival season. So while forecasting time series data we need to capture this seasonality.
 
+Seasonal variations refer to the changes that take place due to the rhythmic forces which operate in a regular and periodic manner. These forces usually have the same or most similar pattern year after year. When we record data weekly, monthly or quarterly, we can see and calculate seasonal variations. Thus, when a time series consists of data only based on annual figures, there will be seen no seasonal variations. These variations may be due to seasons, weather conditions, habits, customs or traditions. For example, in summers the sale of ice-cream increases and at the time of Diwali the sale of diyas, crackers, etc. go up.
+
 ### 2) **`Trend`**
 
 The trend is also one of the important factors which describe that there is certainly increasing or decreasing trend time series, which actually means the value of organization or sales over a period of time and seasonality is increasing or decreasing.
-
+ 
+ Secular trend refers to the general tendency of data to increase or decrease or stagnate over a long period of time. Time series relating to Economic, Business, and Commerce may show an upward or increasing tendency. Whereas, the time series relating to death rates, birth rates, share prices, etc. may show a downward or decreasing tendency
+ 
 ### 3) **`Unexpected Events`**
 
 Unexpected events mean some dynamic changes occur in an organization, or in the market which cannot be captured. for example a current pandemic we are suffering from, and if you observe the Sensex or nifty chart there is a huge decrease in stock price which is an unexpected event that occurs in the surrounding.
@@ -50,7 +54,11 @@ Methods and algorithms are using which we can capture seasonality and trend But 
 
 ### 4) **`Cyclical:`** In which there is no fixed interval, uncertainty in movement and its pattern
 
+Cyclical variations are due to the ups and downs recurring after a period from time to time. These are due to the business cycle and every organization has to phase all the four phases of a business cycle some time or the other. Prosperity or boom, recession, depression, and recovery are the four phases of a business cycle.
+
 ### 5) **`Irregularity:`** Unexpected situations/events/scenarios and spikes in a short time span.
+
+Random variations are fluctuations which are a result of unforeseen and unpredictable forces. These forces operate in an absolutely random or erratic manner and do not have any definite pattern. Thus, these variations may be due to floods, famines, earthquakes, strikes, wars etc.
 
 ![image](https://user-images.githubusercontent.com/99672298/183436930-c6338af7-f442-4d3a-a2d5-74f214e03bca.png)
 
@@ -172,18 +180,76 @@ When dealing with TSA in Data Science and Machine Learning, there are multiple m
 + d==> difference in the order
 Before we get to know about Arima, first you should understand the below terms better.
 
+**Autocorrelation** analysis is an important step in the Exploratory Data Analysis of time series forecasting. The autocorrelation analysis helps detect patterns and check for randomness. It’s especially important when you intend to use an autoregressive–moving-average (ARMA) model for forecasting because it helps to determine its parameters. The analysis involves looking at the Autocorrelation Function (ACF) and Partial Autocorrelation Function (PACF) plots.
+
 + **Auto-Correlation Function (ACF)**
 + **Partial Auto-Correlation Function (PACF)**
-
-**Auto-Correlation Function (ACF):** ACF is used to indicate and how similar a value is within a given time series and the previous value. (OR) It measures the degree of the similarity between a given time series and the lagged version of that time series at different intervals that we observed. This is used to identify a set of trends in the given dataset and the influence of former observed values on the currently observed values.
-**Partial Auto-Correlation (PACF):** PACF is similar to Auto-Correlation Function and is a little challenging to understand. It always shows the correlation of the sequence with itself with some number of time units per sequence order in which only the direct effect has been shown, and all other intermediary effects are removed from the given time series.
-
-Autocorrelation analysis is an important step in the Exploratory Data Analysis of time series forecasting. The autocorrelation analysis helps detect patterns and check for randomness. It’s especially important when you intend to use an autoregressive–moving-average (ARMA) model for forecasting because it helps to determine its parameters. The analysis involves looking at the Autocorrelation Function (ACF) and Partial Autocorrelation Function (PACF) plots.
 
 ##### What is correlation?
 In statistics, correlation or dependence refers to any statistical association between two random variables or bivariate data, whether causal or not. Correlation refers to any statistical association in the broadest sense, but it actually relates to the degree to which two variables are linearly connected. 
 
+##### Basics of Autocorrelation and Partial Autocorrelation
+The degree of resemblance between a certain time series and a lagged version of itself over subsequent time intervals is represented mathematically as autocorrelation. Autocorrelation is similar to the correlation between two different time series in theory, but it uses the same time series twice: once in its original form and again with one or more time periods added.
 
+For example, If it is raining now, the autocorrelation implies that it will also rain tomorrow than if it is rainy today. When it comes to investment, a stock’s positive autocorrelation of returns may be strong, which implies that if it’s up today, it’s more likely to be up tomorrow.
+
+A partial autocorrelation, on the other hand, is a description of the relationship between an observation in a time series and data from earlier time steps that do not take into account the correlations between the intervening observations. The correlation between observations at successive time steps is a linear function of the indirect correlations. These indirect connections are eliminated using the partial autocorrelation function.
+
+**Auto-Correlation Function (ACF):** ACF is used to indicate and how similar a value is within a given time series and the previous value. (OR) It measures the degree of the similarity between a given time series and the lagged version of that time series at different intervals that we observed. This is used to identify a set of trends in the given dataset and the influence of former observed values on the currently observed values.
+
+Autocorrelation is the relationship between two values in a time series. To put it another way, the time series data are correlated, hence the word. “Lags” are the term for these kinds of connections. When a characteristic is measured on a regular basis, such as daily, monthly, or yearly, time-series data is created. 
+
+The number of intervals between two measurements is known as the lag. For example, there is a one-second lag between current and past observations. The lag grows to two if you go back to another interval, and so on.
+
+The observations at yt and yt–k are separated by k time units in mathematical terms. The lag is denoted by K. Depending on the nature of the data, this lag can be measured in days, quarters, or years. When k=1, you’re evaluating observations that are next to each other. 
+
+There is a correlation with each latency. The autocorrelation function (ACF) evaluates the correlation between observations in a time series over a given range of lags. Corr(yt,yt-k), k=1,2,…. gives the ACF for the time series y. We generally use graphs to demonstrate this function
+
+![image](https://user-images.githubusercontent.com/99672298/183568512-2a69fabf-a28a-45cc-9c17-495f8ee6cffa.png)
+
+Blue bars on an ACF plot above are the error bands, and anything within these bars is not statistically significant. It means that correlation values outside of this area are very likely a correlation and not a statistical fluke. The confidence interval is set to 95% by default.
+
+![image](https://user-images.githubusercontent.com/99672298/183568701-da8485d0-48b8-44c4-a45a-ef4c9e62c27f.png)
+
+Notice that for a lag zero, ACF is always equal to one, which makes sense because the signal is always perfectly correlated with itself.
+
+**Partial Auto-Correlation (PACF):** PACF is similar to Auto-Correlation Function and is a little challenging to understand. It always shows the correlation of the sequence with itself with some number of time units per sequence order in which only the direct effect has been shown, and all other intermediary effects are removed from the given time series.
+
+The partial autocorrelation function, like the ACF, indicates only the association between two data that the shorter lags between those observations do not explain. The partial autocorrelation for lag 3 is, for example, merely the correlation that lags 1 and 2 do not explain. In other words, the partial correlation for each lag is the unique correlation between the two observations after the intermediate correlations have been removed.
+
+As previously stated, the autocorrelation function aids in determining the qualities of a time series. The partial autocorrelation function (PACF), on the other hand, is more beneficial during the definition phase for an autoregressive model. Partial autocorrelation plots can be used to specify regression models with time series data as well as Auto-Regressive Integrated Moving Average (ARIMA) models.
+
+![image](https://user-images.githubusercontent.com/99672298/183571802-c1831827-965e-4303-bb42-5382b8cb2a8c.png)
+
+From the above PACF plot if you observe the values at regular intervals, at the 12th lag it is correlated to 0th lag and for 24 lag correlation further decreases and further, it is getting weaker and weaker. 
+
+#### **`Both the ACF and PACF start with a lag of 0, which is the correlation of the time series with itself and therefore results in a correlation of 1.`**
+
+#### **`The difference between ACF and PACF is the inclusion or exclusion of indirect correlations in the calculation.`**
+
+#### **`Additionally, you can see a blue area in the ACF and PACF plots. This blue area depicts the 95% confidence interval and is an indicator of the significance threshold. That means, anything within the blue area is statistically close to zero and anything outside the blue area is statistically non-zero.`**
+
+#### **`The ACF and PACF are used to figure out the order of AR, MA, and ARMA models.`**
+
+### Auto-Regressive and Moving Average Models
+Auto-Regressive Model
+
+The Auto-Regressive (AR) model assumes that the current value (y_t) is dependent on previous values (y_(t-1), y_(t-2), …). Because of this assumption, we can build a linear regression model.
+
+![image](https://user-images.githubusercontent.com/99672298/183572275-e42c2d33-e8e1-492c-85f2-bc2db72757bc.png)
+
+To figure out the order of an AR model, you need to look at the PACF.
+
+### Moving Average Model
+
+The Moving Average (MA) model assumes that the current value (y_t) is dependent on the error terms including the current error (𝜖_t, 𝜖_(t-1),…). Because error terms are random, there’s no linear relationship between the current value and the error terms.
+
+![image](https://user-images.githubusercontent.com/99672298/183572308-bb7b93ac-2d58-4798-aeb1-1e9159abf791.png)
+
+To figure out the order of an MA model, you need to look at the ACF.
+
+Precondition: Stationarity
+ACF and PACF assume stationarity of the underlying time series.
 
 #### What are the limitations of Time Series Analysis?
 Time series has the below-mentioned limitations, we have to take care of those during our analysis,
@@ -193,7 +259,7 @@ Data transformations are mandatory, so a little expensive.
 Models mostly work on Uni-variate data.
 
 ### Synopsis of Time Series Analysis
-+ A Time-Series represents a series of time-based orders. It would be Years, Months, Weeks, Days, Horus, Minutes, and Seconds
++ A Time-Series represents a series of time-based orders. It would be Years, Months, Weeks, Days, Hours, Minutes, and Seconds
 + A time series is an observation from the sequence of discrete-time of successive intervals.
 + A time series is a running chart.
 + The time variable/feature is the independent variable and supports the target variable to predict the results.
