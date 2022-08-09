@@ -155,6 +155,12 @@ Let’s discuss quickly how to convert Non- stationary into stationary for effec
 Yt= Yt – Yt-1
 Yt=Value with time
 
+Stationary time series is when the mean and variance are constant over time. It is easier to predict when the series is stationary.
+
+Differencing is a method of transforming a non-stationary time series into a stationary one. This is an important step in preparing data to be used in an ARIMA model.
+
+The first differencing value is the difference between the current time period and the previous time period. If these values fail to revolve around a constant mean and variance then we find the second differencing using the values of the first differencing. We repeat this until we get a stationary series
+
 ##### Transformation: This includes three different methods they are Power Transform, Square Root, and Log Transfer., most commonly used one is Log Transfer.
 
 If the time series is not stationary, we have to make it stationary and then proceed with modelling. Rolling statistics is help us in making time series stationary. so basically rolling statistics calculates moving average. To calculate the moving average we need to define the window size which is basically how much past values to be considered.
@@ -262,6 +268,8 @@ Notice that for a lag zero, ACF is always equal to one, which makes sense becaus
 
 **Partial Auto-Correlation (PACF):** PACF is similar to Auto-Correlation Function and is a little challenging to understand. It always shows the correlation of the sequence with itself with some number of time units per sequence order in which only the direct effect has been shown, and all other intermediary effects are removed from the given time series.
 
+In other words, it is a summary of the relationship between an observation in a time series with observations at prior time steps with the relationships of intervening observations removed.
+
 The partial autocorrelation function, like the ACF, indicates only the association between two data that the shorter lags between those observations do not explain. The partial autocorrelation for lag 3 is, for example, merely the correlation that lags 1 and 2 do not explain. In other words, the partial correlation for each lag is the unique correlation between the two observations after the intermediate correlations have been removed.
 
 As previously stated, the autocorrelation function aids in determining the qualities of a time series. The partial autocorrelation function (PACF), on the other hand, is more beneficial during the definition phase for an autoregressive model. Partial autocorrelation plots can be used to specify regression models with time series data as well as Auto-Regressive Integrated Moving Average (ARIMA) models.
@@ -277,6 +285,9 @@ From the above PACF plot if you observe the values at regular intervals, at the 
 #### **`Additionally, you can see a blue area in the ACF and PACF plots. This blue area depicts the 95% confidence interval and is an indicator of the significance threshold. That means, anything within the blue area is statistically close to zero and anything outside the blue area is statistically non-zero.`**
 
 #### **`The ACF and PACF are used to figure out the order of AR, MA, and ARMA models.`**
+
+#### **`ACF plots show autocorrelation decaying towards zero`**
+#### **`PACF plot cuts off quickly towards zero`**
 
 #### Interpret ACF and PACF plots
 
@@ -301,6 +312,17 @@ C=intercept
 
 To figure out the order of an AR model, you need to look at the PACF.
 
+Autoregressive Model (AR)
+The autoregressive model is a statistical model that expresses the dependence of one variable on an earlier time period. It’s a model where signal $S_{t}$ depends only on its own past values. For example, AR(3) is a model that depends on 3 of its past values and can be written as
+
+ $\begin{align*} S_{t} =\beta_{0} + \beta_{1}S_{t-1} + \beta_{2}S_{t-2} + \beta_{3}S_{t-3} + \epsilon_{t}, \end{align*}$
+
+where $\beta_{0}$, $\beta_{1}, \beta_{2}, \beta_{3}$ are coefficients and $\epsilon_{t}$ is error. We can select the order p for AR(p) model based on significant spikes from the PACF plot. One more indication of the AR process is that the ACF plot decays more slowly.
+
+For instance, we can conclude from the example below that the PACF plot has significant spikes at lags 2 and 3 because of the significant PACF value. In contrast, for everything within the blue band, we don’t have evidence that it’s different from zero. Also, we could try for p other values of lag that are outside of the blue belt. To conclude, everything outside the blue boundary of the PACF plot tell us the order of the AR model:
+
+![image](https://user-images.githubusercontent.com/99672298/183626771-c8fa5ac6-02de-49d1-b7ee-ed4d3fb27ca3.png)
+
 ### Moving Average Model
 
 The Moving Average (MA) model assumes that the current value (y_t) is dependent on the error terms including the current error (𝜖_t, 𝜖_(t-1),…). Because error terms are random, there’s no linear relationship between the current value and the error terms.
@@ -310,10 +332,25 @@ The Moving Average (MA) model assumes that the current value (y_t) is dependent 
 The moving average model is a time series model that accounts for very short-run autocorrelation. It basically states that the next observation is the mean of every past observation. The order of the moving average model, q, can usually be estimated by looking at the ACF plot of the time series.
 To figure out the order of an MA model, you need to look at the ACF.
 
+Moving Average (MA)
+The MA(q) model calculates its forecast value by taking a weighted average of past errors. It has the ability to capture trends and patterns in time series data. For example, MA(3) for a signal $S_{t}$ can be formulated as
+
+$\begin{align*} S_{t} = \mu + \epsilon_{t} + \gamma_{1}\epsilon_{t-1} + \gamma_{2}\epsilon_{t-2} + \gamma_{3}\epsilon_{t-3} \end{align*}$
+
+where $\mu$ is the mean of a series, $\gamma_{1}, \gamma_{2}, \gamma_{3}$ are coefficients and $\epsilon_{t}, \epsilon_{t-1}, \epsilon_{t-2}, \epsilon_{t-3}$ are errors that have a normal distribution with mean zero and standard deviation one (sometimes called white noise).
+
+In contrast to the AR model, we can select the order q for model MA(q) from ACF if this plot has a sharp cut-off after lag q. One more indication of the MA process is that the PACF plot decays more quickly.
+
+Similar to selecting p for the AR  model, in order to select the appropriate q order for the MA model, we need to analyze all spikes higher than the blue area. In that sense, from the image below, we can try using q=6 or q=3.
+
+![image](https://user-images.githubusercontent.com/99672298/183629986-247d9cd8-1de2-4cc9-89d1-41133fe94126.png)
+
 Precondition: Stationarity
 ACF and PACF assume stationarity of the underlying time series.
 
 ### ARMA 
+The ARMA(p, q) model is a time series forecasting technique used in economics, statistics, and signal processing to characterize relationships between variables. This model can predict future values based on past values and has two parameters, p and q, which respectively define the order of the autoregressive part (AR) and moving average part (MA).
+
 This is a combination of the Auto-Regressive and Moving Average model for forecasting. This model provides a weakly stationary stochastic process in terms of two polynomials, one for the Auto-Regressive and the second for the Moving Average
 
 ARMA is the combination of an Auto-regressive Model and Moving Average Model.
@@ -336,6 +373,19 @@ ARMA requires stationary data, so any trends need to be removed before modeling 
 
 **`ARMA is best for predicting stationary series. So ARIMA came in since it supports stationary as well as non-stationary.`**
 
+Autoregressive Integrated Moving Average Model: ARIMA(p,d,q)
+
+This model is the same as the previous, except now it has this weird d argument. What does this d stand for? d represents the number of nonseasonal differences needed for stationarity. Simply, d just makes nonstationary data stationary by removing trends!
+
+How do you pick your differencing term?
+
+Usually, small terms are picked for the differencing term. If you pick too high, you will likely cause your model to incorrectly represent your data. Some general rules for picking your differencing term are that differencing should not increase your variance and the autocorrelation of the model should be less than -0.5.
+
+Thus, I tried a few differencing terms and concluded that  
+d=1 would be best for the model as it had the lowest variance and the autocorrelation was less than -0.5.
+
+**`ARIMA`**
+
 + AR ==> Uses the past values to predict the future
 + MA ==> Uses the past error terms in the given series to predict the future
 + I==> uses the differencing of observation and makes the data stationary 
@@ -343,15 +393,61 @@ ARMA requires stationary data, so any trends need to be removed before modeling 
 
 Understand the Signature of ARIMA
 + p==> log order => No of lag observations.
++ P = Periods to lag for eg: (if P= 3 then we will use the three previous periods of our time series in the autoregressive portion of the calculation) P helps adjust the line that is being fitted to forecast the series
++ Purely autoregressive models resemble a linear regression where the predictive variables are P number of previous periods
 + d==> degree of differencing => No of times that the raw observations are differenced.
-In an ARIMA model we transform a time series into stationary one(series without trend or seasonality) using differencing
++ D = In an ARIMA model we transform a time series into stationary one(series without trend or seasonality) using differencing. D refers to the number of differencing transformations required by the time series to get stationary.
++ In an ARIMA model we transform a time series into stationary one(series without trend or seasonality) using differencing
 + q==>order of moving average => the size of the moving average window
++ Q = This variable denotes the lag of the error component, where error component is a part of the time series not explained by trend or seasonality
 
 ![image](https://user-images.githubusercontent.com/99672298/183579676-93dd366e-a796-48e4-8d91-fc836d8bb583.png)
+
+##### Machine Learning Approach for Choosing p, d and q Order
+Sometimes it’s very hard and time expensive to find the right order of p, d and q for the ARIMA model by analyzing ACF and PACF plots as we mentioned above. Therefore, there are some easier approaches where it comes to tuning this model. 
+
+Since our search space is not big, usually values p, d and q are not higher than 12, we can apply a popular technique for hyperparameter optimization called grid search. Grid search is simply an exhaustive search through a manually specified subset of the hyperparameter space of a learning algorithm. Basically, it means that this method will try each combination of p and q from the specified subset that we provided.
+
+Also, in order to find the best combination of p, d and q, we need to have some objective function that will measure model performance on a validation set.  Usually, we can use Loss function that purpose. The lower the value of these criteria, the better the model is.
+
+Today, most statistical tools have integrated functionality that is often called “auto ARIMA”.
+Usually, we can use AIC and BIC for that purpose. The lower the value of these criteria, the better the model is.
+
+Akaike Information Criteria (AIC)
+AIC stands for Akaike Information Criteria, and it’s a statistical measure that we can use to compare different models for their relative quality. It measures the quality of the model in terms of its goodness-of-fit to the data, its simplicity, and how much it relies on the tuning parameters. The formula for AIC is
+
+$\begin{align*} AIC = 2k - 2l, \end{align*}$
+
+where l is a log-likelihood, and k is a number of parameters. For example, the AR(p) model has p+1 parameters. From the formula above, we can conclude that AIC prefers a higher log-likelihood that indicates how strong the model is in fitting the data and a simpler model in terms of parameters.
+
+6.2. Bayesian Information Criteria (BIC)
+In addition to AIC, the BIC (Bayesian Information Criteria) uses one more indicator n that defines the number of samples used for fitting. The formula for BIC is
+
+$\begin{align*} BIC = k\log n - 2l. \end{align*}$
 
 **`SARIMAX`** builds on ARMA, and it can handle Seasonality, Integrates differencing into the model to remove trends, and allows for eXogenous regressors (i.e. predictive features other than the target variable being predicted; there is an important caveat that you must have the exogenous regressor for the period that will be predicted).
 
 Designed and developed as a beautiful extension to the ARIMA, SARIMAX or, Seasonal Auto-Regressive Integrated Moving Average with eXogenous factors is a better player than ARIMA in case of highly seasonal time series. There are 4 seasonal components that SARIMAX takes into account.
+
+easonal Autoregressive Integrated Moving Average Model: SARIMA(p,d,q)(P,D,Q)s
+
+The SARIMA model is an extension of the ARIMA model. The only difference now is that this model added on a seasonal component. As we saw, ARIMA is good for making a non-stationary time series stationary by adjusting the trend. However, the SARIMA model can adjust a non-stationary time series by removing trend and seasonality.
+
+As we know:
+
+p - the order of the autoregressive trend
+d - the order of the trend differencing
+q - the order of the moving average trend
+What do (P,D,Q)s mean?
+
+P - the order of the autoregressive seasonality
+D - the order of the seasonal differncing
+Q - the order of the moving average seasonality
+s - the number of periods in your season
+
+In our example, we may not have a SARIMA model because our time series did not have seasonality. Therefore, it may follow a SARIMA(2,1,5)(0,0,0)12.
+
+The s term would be 12 because there would be 12 periods (months) in the season if we had seasonality.
 
 They are -
 
@@ -362,6 +458,15 @@ They are -
  3. Seasonal Integrity Order Component
 
  4. Seasonal Periodicity
+
+Final steps
+
+Step 1 — Check stationarity: If a time series has a trend or seasonality component, it must be made stationary before we can use ARIMA to forecast. .
+Step 2 — Difference: If the time series is not stationary, it needs to be stationarized through differencing. Take the first difference, then check for stationarity. Take as many differences as it takes. Make sure you check seasonal differencing as well.
+Step 3 — Filter out a validation sample: This will be used to validate how accurate our model is. Use train test validation split to achieve this
+Step 4 — Select AR and MA terms: Use the ACF and PACF to decide whether to include an AR term(s), MA term(s), or both.
+Step 5 — Build the model: Build the model and set the number of periods to forecast to N (depends on your needs).
+Step 6 — Validate model: Compare the predicted values to the actuals in the validation sample.
 
 **`FBProphet`** is a time series forecasting library released by Facebook. It is easier to implement and tune with more approachable and intuitive parameters and customizations. The API is also more similar to scikit-learn that the StatsModels models discussed previously. It is based on an additive regression model, which is built up from multiple regression models for various time series decomposed from the original one. Its core formulation has 4 separate components to address the time series’ overall trend, weekly seasonality, annual seasonality and holiday behavior (i.e. atypical days).
 
@@ -381,3 +486,13 @@ Models mostly work on Uni-variate data.
 + Since TSA involves producing the set of information in a particular sequence, it makes a distinct from spatial and other analyses.
 + Using AR, MA, ARMA, and ARIMA models, we could predict the future.
 
+### What are the advantages of using Time series analysis?
+
+Answer:
+
+#### The advantages of time series analysis are as follows:
+
++ **Reliability:** Time series analysis uses historical data to represent conditions along with a progressive linear chart. The information or data used is collected over a period of time say, weekly, monthly, quarterly or annually. This makes the data and forecasts reliable.
++ **Seasonal Patterns:** As the data related to a series of periods, it helps us to understand and predict the seasonal pattern. For example, the time series may reveal that the demand for ethnic clothes not only increases during Diwali but also during the wedding season.
++ **Estimation of trends:** The time series analysis helps in the identification of trends. The data tendencies are useful to managers as they show an increase or decrease in sales, production, share prices, etc.
++ **Growth:** Time series analysis helps in the measurement of financial growth. It also helps in measuring the internal growth of an organization that leads to economic growth.
