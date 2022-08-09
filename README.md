@@ -246,6 +246,20 @@ Hyperparameters:
 
 + Alpha: Smoothing factor for the level.
 
+This method is suitable for forecasting data with no clear trend or seasonal pattern. For example, the data in Figure below do not display any clear trending behaviour or any seasonality. (There is a rise in the last few years, which might suggest a trend. We will consider whether a trended method would be better for this series later in this chapter.) We have already considered the naïve and the average as possible methods for forecasting such data 
+
+![image](https://user-images.githubusercontent.com/99672298/183699903-54cfb5d9-f725-4c6f-b0e4-eace8081cbfa.png)
+
+For example, it may be sensible to attach larger weights to more recent observations than to observations from the distant past. This is exactly the concept behind simple exponential smoothing. Forecasts are calculated using weighted averages, where the weights decrease exponentially as observations come from further in the past — the smallest weights are associated with the oldest observations:
+
+where 0 ≤α ≤ 1 is the smoothing parameter. The one-step-ahead forecast for time T + 1 is a weighted average of all of the observations in the series  1,…,yT . The rate at which the weights decrease is controlled by the parameter α.
+
+The table below shows the weights attached to observations for four different values of α when forecasting using simple exponential smoothing. Note that the sum of the weights even for a small value of α will be approximately one for any reasonable sample size.
+
+![image](https://user-images.githubusercontent.com/99672298/183702145-181c6a69-58a0-4ffe-8c60-95c1b183ab01.png)
+
+For any α between 0 and 1, the weights attached to the observations decrease exponentially as we go back in time, hence the name “exponential smoothing”.
+
 #### Double Exponential Smoothing
 Double Exponential Smoothing is an extension to Exponential Smoothing that explicitly adds support for trends in the univariate time series.
 
@@ -288,6 +302,11 @@ bt = best estimate of trend at time t
 + Additive Dampening: Dampen a trend linearly.
 + Multiplicative Dampening: Dampen the trend exponentially.
 
+This method involves a forecast equation and two smoothing equations (one for the level and one for the trend):
+Forecast equation
+
+![image](https://user-images.githubusercontent.com/99672298/183702888-5ee64b02-28fa-4fdb-a3aa-704d985d6f17.png)
+ 
 ##### Hyperparameters:
 
 + Alpha: Smoothing factor for the level.
@@ -309,6 +328,12 @@ As with the trend, the seasonality may be modeled as either an additive or multi
 Additive Seasonality: Triple Exponential Smoothing with a linear seasonality.
 Multiplicative Seasonality: Triple Exponential Smoothing with an exponential seasonality.
 Triple exponential smoothing is the most advanced variation of exponential smoothing and through configuration, it can also develop double and single exponential smoothing models.
+
+![image](https://user-images.githubusercontent.com/99672298/183703127-e1a4a60f-6117-44aa-a8fd-c141789d6f44.png)
+
+There are two variations to this method that differ in the nature of the seasonal component. The additive method is preferred when the seasonal variations are roughly constant through the series, while the multiplicative method is preferred when the seasonal variations are changing proportional to the level of the series.
+
+![image](https://user-images.githubusercontent.com/99672298/183703623-23c39358-9daf-4e7a-81a6-8aff8df8d69f.png)
 
 ##### Hyperparameters:
 
@@ -580,6 +605,8 @@ Models mostly work on Uni-variate data.
 + Time Series Analysis (TSA) is used in different fields for time-based predictions – like Weather Forecasting, Financial, Signal processing, Engineering domain – Control Systems, Communications Systems.
 + Since TSA involves producing the set of information in a particular sequence, it makes a distinct from spatial and other analyses.
 + Using AR, MA, ARMA, and ARIMA models, we could predict the future.
+
+![11 07 2022_23 20 55_REC](https://user-images.githubusercontent.com/99672298/183698626-4d084cb5-f8ef-4ebe-8833-a891297651f6.png)
 
 ### What are the advantages of using Time series analysis?
 
