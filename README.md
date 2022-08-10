@@ -608,6 +608,8 @@ Models mostly work on Uni-variate data.
 
 ![image](https://user-images.githubusercontent.com/99672298/183704027-c2f3a8e3-a6c6-4363-8427-8c9db99478d6.png)
 
+Final Evaluation can be done by taking a Hypothesis Testing Two sample Test and comparing thr samples that is the Actual Value in testing and the predicted or forecasted value from the model, by taking the Null hypothesis: as the mean for both the sample are same and in Alternate Hypothesis: The mean of both are sample are significantly different and by taking a significance level of 95%. After calculation if we get a p-value corresponding to the critical value lower than the signinficance level we cay say we fail to reject null hypothesis and say both of the sample mean are same or in other case we reject the the null hypothesis
+
 ### What are the advantages of using Time series analysis?
 
 Answer:
@@ -640,6 +642,34 @@ There is a lot of overlap between these two cases.
 For example, you may have daily data and want to predict a monthly problem. You could use the daily data directly or you could downsample it to monthly data and develop your model.
 
 A feature engineering perspective may use observations and summaries of observations from both time scales and more in developing a model.
+
+### Interpolation – Power of Interpolation in Python to fill Missing Values
+
+#### Introduction
+Interpolation is a technique in Python used to estimate unknown data points between two known data points. Interpolation is mostly used to impute missing values in the dataframe or series while preprocessing data.
+
+Interpolation is also used in Image Processing when expanding an image you can estimate the pixel value with help of neighboring pixels.
+
+we can use Interpolation to find missing value with help of its neighbors. When imputing missing values with average does not fit best, we have to move to a different technique and the technique most people find is Interpolation.
+
+Interpolation is mostly used while working with time-series data because in time-series data we like to fill missing values with previous one or two values. for example, suppose temperature, now we would always prefer to fill today’s temperature with the mean of the last 2 days, not with the mean of the month. We can also use Interpolation for calculating the moving averages.
+
+1) Linear Interpolation
+Linear Interpolation simply means to estimate a missing value by connecting dots in a straight line in increasing order. In short, It estimates the unknown value in the same increasing order from previous values.
+Hence, Linear interpolation works in the same order. Remember that it does not interpret using the index, it interprets values by connecting points in a straight line.
+
+![image](https://user-images.githubusercontent.com/99672298/183919404-ef2e57f9-0cae-4388-9b14-9de0d71792f8.png)
+
+2) Polynomial Interpolation
+In Polynomial Interpolation you need to specify an order. It means that polynomial interpolation is filling missing values with the lowest possible degree that passes through available data points. The polynomial Interpolation curve is like the trigonometric sin curve or assumes it like a parabola shape. 
+If you pass an order as 1 then the output will similar to linear because the polynomial of order 1 is linear.
+
+![image](https://user-images.githubusercontent.com/99672298/183919430-6a5ab330-2285-43e4-82f2-53e01ea31256.png)
+
+3) Interpolation through Padding
+Interpolation with help of padding simply means filling missing values with the same value present above them in the dataset. If the missing value is in the first row then this method will not work. While using this technique you also need to specify the limit which means how many NaN values to fill.
+
+So, if you are working on a real-world project and want to fill missing values with previous values you have to specify the limit as to the number of rows in the dataset.
 
 
 
