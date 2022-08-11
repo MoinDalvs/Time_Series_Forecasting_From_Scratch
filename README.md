@@ -19,6 +19,7 @@ Thus, it’s a descriptive Vs. predictive strategy based on your time-series pro
 
 In a nutshell, time series analysis is the study of patterns and trends in a time-series data frame by descriptive and inferential statistical methods. Whereas, time series forecasting involves forecasting and extrapolating future trends or values based on old data points (supervised time-series forecasting), clustering them into groups, and predicting future patterns (unsupervised time-series forecasting).
 
+### `The four variations to time series are (1) Seasonal variations (2) Trend variations (3) Cyclical variations, and (4) Random variations.`
 #### How to analyze Time Series?
 + Collecting the data and cleaning it
 + Preparing Visualization with respect to time vs key feature
