@@ -672,8 +672,111 @@ Interpolation with help of padding simply means filling missing values with the 
 
 So, if you are working on a real-world project and want to fill missing values with previous values you have to specify the limit as to the number of rows in the dataset.
 
+### Linear, Polynomial and Exponential Growth in Time Series Analysis
+If you are a regular of this data science forecasting you will see the terms Linear, Polynomial and Exponential thrown around sometimes. 
+
+Growth refers to how fast a sequence of numbers increases. In an incremental game these sequences usually are resources by time or prices based on levels. It is also important the concept of bound. We say B bounds A (above) if B grows faster than A, that is, at some point B becomes bigger than A and stays bigger forever (the same apply for bounded below).
+
+Notice that bound is concerned to how fast a sequence gets big, not particular values. Let see an example:
+
+A: 1.000.000, 2.000.000, 3.000.000...
+
+B: 1, 4, 9, 16...
+
+We may think A grows faster because it has way bigger numbers. However, after a (long) while it looks like this.
+
+A:9.99999E11, 1.0E12, 1.000001E12
+
+B:9.99998E11, 1.0E12, 1.000002E12
+
+Therefore B grows faster than A.
+
+When a sequence is bounded above and below by the same function, we say that it grows like that function, e.g. Quadratic growth. Again, we are not concerned with specific values, but with how the sequence evolves. This concept is useful because we can use it to classify sequences, comparing them to well known mathematical functions.
+
+███
+
+The holy trinity.
+
+Linear, Polynomial (degree >=2) and Exponential are by far the most common used growth rates for incrementals. The reason is that they bound each other in order (Linear < Polynomial < Exponential) and can be combined to balance the progress in a game in terms of production and prices.
+
+If prices grow slower than production, at some point buying stuff becomes trivial since you produce more than you spend, and the balance is broken. If they grow at the same rate, the time that it requires to buy something is kept almost constant (e.g. 1 every 10 minutes) which may or may not be interesting. If prices grow faster, it will longer and longer to buy new stuff, slowing down progress. This slow down is used by designers to force the player to hit a "wall" were progress is too slow, usually forcing some kind of action (prestige, moving to a new section of the game) to continue progressing.
+
+We are now going to proceed to explain each one individually.
+
+█
+
+Polynomial.
+
+█
+
+Linear.
+
+Description: Grows like a linear function.
+
+Example function: x
+
+Example sequence: 1,2,3,4,5...
+
+Explanation: Although we usually talk about linear and polynomial as different things, linear is a kind of polynomial, specifically of degree 1.
+
+Linear growth is the one most people will be familiar with, as it is everywhere in our daily life. This sequence grows at a fixed rate, so the different between two consecutive elements is the same. It is also how people intuitively think about how things progress: if going somewhere takes 1 hour, going twice further will take roughly 2 hours. If buying something cost 100$, buying 5 of it will cost 500$, and so on.
+
+Possible uses: Linear growth is almost always used as a resource generation rate. It is simple, it is easy to work with, and people is familiar with it. They also are naturally trained to work with it and can easily make guesses about how it will progress.
+
+█
+
+Superlinear.
+
+█
+
+Quadratical.
+
+Description: Grows like a polynomial of degree 2.
+
+Example function: x2
+
+Example sequence: 1,4,9,16,25...
+
+Explanation: When we talk about polynomial, usually we mean any polynomial with degree >= 2. A polynomial with degree exactly 2 has an special name, quadratic.
+
+As we can see from the example sequence, unlike in linear growth, here the distance between two consecutive numbers gets bigger and bigger. Now lets look at the distance between two consecutive numbers:
+
+3,5,7,9,11...
+
+We can see that although the distance grows bigger, it does so at a constant rate of 2.
+
+People have a harder time understanding quadratic growth because it is not as commonplace as linear in our daily lives. One of such few examples would be the following: in a sports tournament, each team needs to play a match against each other team. In that case, the number of total matches is in the order of x2 (thanks to this postfor the inspiration).
+
+Possible uses: Since quadratic sits in the middle between linear and exponential, it can be used both for prices and for generate resources. A tipycal example for resource generation is a "building that creates buildings", as seen in Derivative Clicker
+
+█
+
+Cubic,Quartic,etc.
+
+Description: Polynomials of degrees 3 (x3), 4(x4), etc. The same description of Quadratic applies, but each one growing faster.
+
+█
+
+Exponential.
+
+Description: The growth rate of the sequence is a factor of the current value.
+
+Example function: 2x
+
+Example sequence: 2,4,8,16,32,64,128,256...
 
 
+Explanation: Exponential growth is the one people usually has most problems with. We know that it grows fast, but people usually doesn't fully understand what this fast means. It is usually mistaken with a polynomial of a high degree, because these polynomials produce large values.
+
+As in polynomial case, we see how the distance between numbers grows bigger. Lets take a look at the distance between two consecutive numbers.
+
+2,4,8,16,32,64,128
+
+As we can see, unlike for polynomials, the difference in the distance between two consecutive numbers is not constant, but it increases. This means that not only numbers grow apart with time, but this trend accelerates with time.
+
+Exponential growth is also present in some real life situations, but usually complex enough so that some people can get lost on it. For instance, the interest rate in loans or bank savings follow exponential growth, since they are multiplied by a rate each year. Also the population of some organisms like virus and bacterial follow exponential growth e.g. the total population of viruses doubles every day.
+
+Possible uses: Exponential is almost exclusively used for prices, as it bounds both linear and polynomial, and it ensures that player progress will slow down with time.
 <div style="display:fill;
             border-radius: false;
             border-style: solid;
